@@ -5,13 +5,30 @@
 <struts>
 
 	<package name="demo" extends="struts-default" namespace="/">
-	<!-- action的class属性不写action的全路径了，
-		因为在spring中也创建了一次action的对象，在这里又创建了、就创建了两次
-		写spring中配置action的bean的id值
-		这里必须引入struts和spring整合的jar包struts2-spring-plugin-2.3.24.jar
-	 -->
-	<action name="user" class="userAction" method="execute">
-	</action>
+		<!-- 1在你要拦截的action标签中的package标签中声明拦截器 name:随便写个拦截器名 class：拦截器全路径 -->
+		<interceptors>
+			<interceptor name="loginintercepter" class="com.xapi.intercepter.LoginIntercepter">
+			</interceptor>
+		</interceptors>
+		<!-- action的class属性不写action的全路径了， 因为在spring中也创建了一次action的对象，在这里又创建了、就创建了两次 
+			写spring中配置action的bean的id值 这里必须引入struts和spring整合的jar包struts2-spring-plugin-2.3.24.jar -->
+		<action name="user_*" method="{1}" class="userAction">
+			<result name="loginsuccess">/index.htm</result>
+			<result name="login">/login.jsp</result>
+		</action>
+		<action name="customer_*" class="customerAction" method="{1}">
+			<result name="list">/jsp/customer/list.jsp</result>
+			<result name="toAddPage">/jsp/customer/add.jsp</result>
+			<result name="addCustomer" type="redirectAction">customer_list.action?cc=1</result>
+			<result name="like">/jsp/customer/list.jsp</result>
+			<result name="updateCustomer">/jsp/customer/edit.jsp</result>
+			<result name="okupdate" type="redirectAction">customer_list?cc=1</result>
+			<result name="deleteCustomer" type="redirectAction">customer_list?cc=1</result>
+		</action>
+		
+		<action name="linkman_*" class="linkManAction" method="{1}">
+					<result name="list">/jsp/linkman/list.jsp</result>
+		</action>
 	</package>
 </struts>
 	

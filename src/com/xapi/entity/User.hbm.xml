@@ -1,15 +1,27 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2017-8-15 14:40:40 by Hibernate Tools 3.5.0.Final -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
 <hibernate-mapping>
 	<class name="com.xapi.entity.User" table="t_user">
-		<id name="uid" column="uid">
-			<generator class="native" />
+		<id name="user_id" column="user_id">
+			<generator class="native"></generator>
 		</id>
-		<property name="username" column="username">
-		</property>
-		<property name="address" column="address">
-		</property>
+		<property name="user_name" column="user_name"></property>
+		<property name="user_password" column="user_password"></property>
+		<!-- table：第三张表 
+		name：role中set属性名 
+		column:配置当前文件在第三张表中的外键
+		many to many 多对多
+		class对应表的全路径
+		cascade级联操作（保存，删除）配置
+		many to many中column：对应表在第三张表中的外键
+		 -->
+		<set name="roleSet" table="user_role" cascade="save-update,delete">
+			<key column="user_id"></key>
+			<many-to-many class="com.xapi.entity.Role" column="role_id">
+			</many-to-many>
+		</set>
 	</class>
 </hibernate-mapping>

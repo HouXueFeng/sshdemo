@@ -10,38 +10,38 @@
 	http://www.springframework.org/schema/aop/spring-aop.xsd
 	http://www.springframework.org/schema/tx
 	http://www.springframework.org/schema/tx/spring-tx.xsd">
-		
-	
-<!-- 	<context:annotation-config />
- -->	
- 
- <context:component-scan base-package="com.xapi"/>
-	
+	<context:annotation-config />
+	<context:component-scan base-package="com.xapi" />
+
+
+	<bean id="customerService" class="com.xapi.service.CustomerService"></bean>
 	<!-- 配置c3p0连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<property name="driverClass" value="com.mysql.jdbc.Driver"/>
-		<property name="jdbcUrl" value="jdbc:mysql:///ssh?characterEncoding=utf-8"/>
-		<property name="user" value="root"/>
-		<property name="password" value=""/>
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql:///ssh?characterEncoding=utf-8" />
+		<property name="user" value="root" />
+		<property name="password" value="" />
 	</bean>
 
 	<!-- 把sseeionFactory的创建交给spring管理 -->
 	<bean id="seesionFactory"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<!-- 注入属性 -->
-		<property name="dataSource" ref="dataSource"/>
-		<property name="configLocations" value="classpath:hibernate.cfg.xml"/>
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocations" value="classpath:hibernate.cfg.xml" />
 	</bean>
 
 	<!-- 使用hibernate的模板 -->
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
-	<property name="sessionFactory" ref="seesionFactory"/>
+		<property name="sessionFactory" ref="seesionFactory" />
 	</bean>
 	<!-- 开启事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 		<!-- 注入seesionFactory（包含dataSource） -->
-		<property name="sessionFactory" ref="seesionFactory"/>
+		<property name="sessionFactory" ref="seesionFactory" />
 	</bean>
 	<!-- 开启事务注解 -->
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

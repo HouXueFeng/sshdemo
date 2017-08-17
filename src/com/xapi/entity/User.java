@@ -1,26 +1,38 @@
 package com.xapi.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class User {
-	private Integer uid;
-	private String username;
-	private String address;
-	public Integer getUid() {
-		return uid;
+	private Integer user_id;//用户id
+	private String user_name;//用户名字
+	private String user_password;//用户密码
+	private Set<Role>roleSet=new HashSet<>();//一个用户可以有多角色
+
+	public Set<Role> getRoleSet() {
+		return roleSet;
 	}
-	public void setUid(Integer uid) {
-		this.uid = uid;
+	public void setRoleSet(Set<Role> roleSet) {
+		this.roleSet = roleSet;
 	}
-	public String getUsername() {
-		return username;
+	public Integer getUser_id() {
+		return user_id;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
-	public String getAddress() {
-		return address;
+	public String getUser_name() {
+		return user_name;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
+	public String getUser_password() {
+		return user_password;
+	}
+	public void setUser_password(String user_password) {
+		this.user_password = user_password;
+	}
+
 	
 }

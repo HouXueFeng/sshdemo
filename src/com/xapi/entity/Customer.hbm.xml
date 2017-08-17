@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.xapi.entity.Customer" table="t_customer" lazy="false">
+		<id name="cid" column="cid">
+			<!-- 主键自增 -->
+			<generator class="native"></generator>
+			
+		</id>
+		<property name="custName" column="custName"></property>
+		<property name="custLevel" column="custLevel"></property>
+		<property name="custSource" column="custSource"></property>
+		<property name="custPhone" column="custPhone"></property>
+		<property name="custMobile" column="custMobile"></property>
+		<!-- 因为custom对linkMan是一对多 
+			cascade级联保存的配置 
+			name：Customer类中有属性Set集合setLinkMan
+			key:外键
+			one to many:setLinkMan所在的类
+			inverse="false"默认是不放弃外间关系的维护
+			inverse="true"放弃关系的维护
+		-->
+		<set name="setLinkMan" cascade="save-update,delete" inverse="true" batch-size="20" lazy="false">
+			<key column="clid"></key>
+			<one-to-many class="com.xapi.entity.LinkMan" />
+		</set>
+	</class>
+</hibernate-mapping>

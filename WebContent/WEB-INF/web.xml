@@ -3,7 +3,7 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
-	<display-name>ssh_demo</display-name>
+	<display-name>ssh_demo2</display-name>
 	<!-- 启动web服务器首先加载监听器寻找spring核心配置文件 -->
 	<!-- 设置spring文件的位置（默认加载的文件是application.xml） -->
 	<context-param>
