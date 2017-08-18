@@ -22,6 +22,8 @@ public interface CustomerDao {
 	Integer getcount();// 获取总条数
 
 	PageBean<List<Customer>> getListForPage(int offset, int length);
+
+	Object deletes(String parameterValues);
 	
 
 }

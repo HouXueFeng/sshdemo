@@ -45,4 +45,9 @@ public class CustomerService {
 		return customerDao.getListForPage(currentPage, pagesize);
 		
 	}
+
+	public Object deletes(String parameterValues) {
+		return customerDao.deletes(parameterValues);
+		
+	}
 }

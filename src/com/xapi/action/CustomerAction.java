@@ -1,5 +1,7 @@
 package com.xapi.action;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
@@ -85,7 +87,7 @@ public class CustomerAction extends ActionSupport {
 		String string = request.getParameter("cc");
 		System.out.println(string);
 		Integer pageNum = Integer.valueOf(string);
-		customers = customerService.getListForPage(pageNum,3).getBean();
+		customers = customerService.getListForPage(pageNum, 3).getBean();
 		request.setAttribute("page", customerService.getListForPage(pageNum, 3));
 
 		return "list";
@@ -113,7 +115,7 @@ public class CustomerAction extends ActionSupport {
 	 * 
 	 * @return String
 	 */
-	
+
 	public String like() {
 		customers = customerService.selectByLike(username);
 		System.out.println(customerService.getcount() + "sdfdsfsdfsdfdsfsdf");
@@ -148,17 +150,38 @@ public class CustomerAction extends ActionSupport {
 		customerService.deleteById(id);
 		return "deleteCustomer";
 	}
+
 	/**
 	 * 测试分页数据
 	 */
-	
-	  public String findpageList(){
-		  PageBean<?> listForPage =
-	  customerService.getListForPage(6, 3); List<?> bean =
-	  listForPage.getBean(); for (Object object : bean) {
-	  System.out.println(object); }
-	  
-	  return NONE; }
-	 
+
+	public String findpageList() {
+		PageBean<?> listForPage = customerService.getListForPage(6, 3);
+		List<?> bean = listForPage.getBean();
+		for (Object object : bean) {
+			System.out.println(object);
+		}
+
+		return NONE;
+	}
+
+	/**
+	 * 批量删除
+	 * @return
+	 */
+	public String deletes() {
+		String parameterValues = ServletActionContext.getRequest().getParameter("ck1");
+		
+		if (parameterValues.equals("") || parameterValues == null) {
+			return ERROR;
+		} else {
+//			String[] split = parameterValues.split(",");
+//			System.out.println(split[0].trim()+"---"+split[1].trim());
+//			这里直接把还未截取的如10,11的字符串传到删除imp中去，因为这里本想着使用in（）；
+//			但是选择了级联删除就把分割的逻辑交给impl层了
+			customerService.deletes(parameterValues);
+		}
+		return "deletes";
+	}
 
 }

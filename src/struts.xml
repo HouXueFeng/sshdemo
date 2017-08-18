@@ -24,6 +24,7 @@
 			<result name="updateCustomer">/jsp/customer/edit.jsp</result>
 			<result name="okupdate" type="redirectAction">customer_list?cc=1</result>
 			<result name="deleteCustomer" type="redirectAction">customer_list?cc=1</result>
+			<result name="deletes" type="redirectAction">customer_list?cc=1</result>
 		</action>
 		
 		<action name="linkman_*" class="linkManAction" method="{1}">

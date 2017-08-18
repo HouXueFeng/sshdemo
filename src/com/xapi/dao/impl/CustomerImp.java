@@ -85,7 +85,7 @@ public class CustomerImp implements CustomerDao {
 				Object uniqueResult = query.uniqueResult();
 				long a = (long) uniqueResult;
 				int b = (int) a;
-				
+
 				return b;
 			}
 		});
@@ -109,9 +109,40 @@ public class CustomerImp implements CustomerDao {
 		pageBean.setTotalCount(getcount());
 		pageBean.setCurrentPage(currentPage);
 		int currentPage2 = pageBean.getCurrentPage();
-		System.out.println(currentPage2+"--------------------------");
+		System.out.println(currentPage2 + "--------------------------");
 		pageBean.setPageSize(pagesize);
 		return pageBean;
+	}
+
+	/**
+	 * 批量删除
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object deletes(String str) {
+		return hibernateTemplate.execute(new HibernateCallback() {
+
+			@Override
+			public Object doInHibernate(Session session) throws HibernateException {
+
+				String[] split = str.split(",");
+				for (int i = 0; i < split.length; i++) {
+					/**
+					 * 级联删除
+					 */
+					Customer customer = hibernateTemplate.get(Customer.class, Integer.valueOf(split[i].trim()));
+					hibernateTemplate.delete(customer);
+
+				}
+				/*这里可以使用in来进行删除但是要注意的是：要删除两个表中的数据
+				 * Query query =
+				 * session.createQuery("delete from Customer c where c.cid in ("
+				 * +str+")"); return query.executeUpdate();
+				 */
+				return null;
+			}
+		});
+
 	}
 
 }
